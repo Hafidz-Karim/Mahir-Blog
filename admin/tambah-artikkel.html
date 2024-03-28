@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/tambah-artikel.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2>Mahir Blog</h2>
+      <a href="#">Beranda</a>
+      <a href="#">Tulis Artikel</a>
+      <a href="#">Setting</a>
+    </div>
+    <div id="content">
+      <div id="navbar">
+        <div class="togle-btn" onclick="togleSideBar()">&#9776;</div>
+        <div class="right">
+          <input type="text" name="search" id="search" placeholder="Cari" />
+          <button id="logout-btn" onclick="kembalikanKeHalamanLogin()">
+            Logout
+          </button>
+        </div>
+      </div>
+      <div class="content-tambah-artikel">
+        <h2>Tulis artikel</h2>
+        <div class="container">
+          <label for="judul">Masukan Judul</label>
+          <input type="text" name="judul" id="judul" />
+          <label for="nama">Penulis</label>
+          <input type="text" name="nama" id="nama" />
+          <label for="date">Tanggal</label>
+          <input type="date" name="date" id="date" />
+          <label for="artikel">Tulis artikel</label>
+          <textarea id="artikel" name="artikel" cols="30" rows="10"></textarea>
+          <input
+            type="submit"
+            id="submit"
+            onclick="simpanArtikels(event)"
+            value="Tambahkan Artikel"
+          />
+        </div>
+      </div>
+    </div>
+    <script>
+      function simpanArtikels(event) {
+        event.preventDefault();
+        const inputanJudul = document.getElementById("judul");
+        const inputanNama = document.getElementById("nama");
+        const inputanDate = document.getElementById("date");
+        const inputanArtikels = document.getElementById("artikel");
+
+        const judul = inputanJudul.value.trim();
+        const nama = inputanNama.value.trim();
+        const date = inputanDate.value.trim();
+        const artikels = inputanArtikels.value.trim();
+
+        if (judul !== "" || nama !== "" || date !== "" || artikels !== "") {
+        }
+      }
+    </script>
+  </body>
+</html>

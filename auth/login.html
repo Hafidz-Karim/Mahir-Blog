@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <!--  -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!--  -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="../styles/login.css" />
+    <title>Login page</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrap-form" data-aos="zoom-in" data-aos-duration="1500">
+        <a href="../index.html" class="logo"><h1>Mahir Blog</h1></a>
+        <div>
+          <h3>Login Your account</h3>
+          <form id="loginForm">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Masukan email"
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Masukan password"
+            />
+            <input type="submit" value="Login" onclick="RegisterAkun(event)" />
+          </form>
+          <span class="register">
+            Belum punya akun? <a href="./register.html">Register</a>
+          </span>
+        </div>
+      </div>
+      <div class="wrapImage" data-aos="zoom-in-up" data-aos-duration="2000">
+        <img src="../assets/Secure login-amico.svg" alt="login img" />
+      </div>
+    </div>
+
+    <script>
+      AOS.init();
+      function RegisterAkun(event) {
+        event.preventDefault();
+
+        const inputanEmail = document.getElementById("email");
+        const inputanPassword = document.getElementById("password");
+        const email = inputanEmail.value.trim();
+        const password = inputanPassword.value.trim();
+
+        if (inputanEmail !== "" || inputanPassword !== "") {
+          const students = dapatkanStudentsDariLokalStorage();
+
+          const cekData = students.find(
+            (student) =>
+              student.email === email && student.password === password
+          );
+
+          if (cekData) {
+            window.location.href = "/admin/dashbord.html";
+            buatSessionUntukStudents(cekData);
+            alert("Login Sucsesfully");
+          } else {
+            alert("Email atau password tidak sesuai");
+          }
+
+          simpanStudentsKeLokalStorage(students);
+        }
+      }
+      function dapatkanStudentsDariLokalStorage() {
+        const studensJSON = localStorage.getItem("students");
+        return studensJSON ? JSON.parse(studensJSON) : [];
+      }
+      function simpanStudentsKeLokalStorage(arg) {
+        localStorage.setItem("students", JSON.stringify(arg));
+      }
+      function buatSessionUntukStudents(argument) {
+        localStorage.setItem(
+          "session",
+          JSON.stringify({ email: argument.email })
+        );
+      }
+      function ambilSessionDariLokalStorage() {
+        const sessionJSON = localStorage.getItem("session");
+        
+        function dapatkanSessionDariLokalStorage() {
+          const sessionJSON = localStorage.getItem("session");
+          return sessionJSON ? JSON.parse(sessionJSON) : null;
+        }
+        return sessionJSON ? JSON.parse(sessionJSON) : null;
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const sessionMurid = ambilSessionDariLokalStorage();
+        console.log(sessionMurid);
+
+        if (sessionMurid) {
+          window.location.href = "/admin/dashbord.html";
+          alert("anda sudah login dan harus logout dahulu");
+        }
+      });
+    </script>
+  </body>
+</html>

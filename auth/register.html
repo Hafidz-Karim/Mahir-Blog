@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <!--  -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!--  -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="../styles/register.css" />
+    <title>Register Account</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrap-form" data-aos="zoom-in" data-aos-duration="1500">
+        <a href="../index.html" class="logo"><h1>Mahir Blog</h1></a>
+        <div>
+          <h3>Create your account</h3>
+          <form id="registerForm">
+            <label for="email">Email</label>
+            <input
+              autocomplete="email"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Masukan email"
+            />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Masukan password"
+            />
+            <input
+              type="submit"
+              value="Register"
+              onclick="registerAkun(event)"
+            />
+          </form>
+          <span class="login">
+            Sudah punya akun? <a href="./login.html">Masuk</a>
+          </span>
+        </div>
+      </div>
+      <div class="wrapImage" data-aos="zoom-in-up" data-aos-duration="2000">
+        <img src="../assets/Sign up-rafiki (1).svg" alt="Register img" />
+      </div>
+    </div>
+
+    <script>
+      AOS.init();
+      function registerAkun(event) {
+        event.preventDefault();
+        const inputEmail = document.getElementById("email");
+        const inputPassword = document.getElementById("password");
+
+        const email = inputEmail.value.trim();
+        const password = inputPassword.value.trim();
+        console.log(email);
+        console.log(password);
+
+        if (email !== "" || password !== "") {
+          const students = ambilDataMuridDariLokalStorage();
+          const cekEmailMurid = students.some(
+            (student) => student.email === email
+          );
+
+          if (cekEmailMurid) {
+            alert(
+              "Email telah terdaftar dan silahkan gunakan email yang lainnya"
+            );
+          } else {
+            students.push({ email: email, password: password });
+            window.location.href = "./login.html";
+
+            alert("Akun anda berhasil terdaftar,silahkan masuk!");
+            simpanDataKeLokalStorage(students);
+            documents.forms["registerForm"].reset();
+          }
+        }
+      }
+      function simpanDataKeLokalStorage(arg) {
+        localStorage.setItem("students", JSON.stringify(arg));
+      }
+      function ambilDataMuridDariLokalStorage() {
+        const muridJSON = localStorage.getItem("students");
+        return muridJSON ? JSON.parse(muridJSON) : [];
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const sessionStudent = ambilSessionMuridDariLokalStorage();
+        if (sessionStudent) {
+          window.location.href = "/admin/dashbord.html";
+          alert("Selamat login anda telah berhasil");
+        }
+      });
+      function ambilSessionMuridDariLokalStorage() {
+        const sessionJSON = localStorage.getItem("session");
+        return sessionJSON ? JSON.parse(sessionJSON) : null;
+      }
+    </script>
+  </body>
+</html>

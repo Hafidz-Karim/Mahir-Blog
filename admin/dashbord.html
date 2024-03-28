@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/dashbord.css" />
+    <title>Dashbord - Mahir</title>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2><a href="../index.html">Mahir Blog</a></h2>
+      <a href="#">Beranda</a>
+      <a href="../admin/add-article.html">Tulis artikel</a>
+      <a href="#">Pengaturan</a>
+      <a href="#" class="btn-logout" onclick="logOut()">Logout</a>
+    </div>
+    <div id="content">
+      <div id="navbar">
+        <div class="togle-btn" onclick="togleSideBar()">&#9776;</div>
+        <div class="right">
+          <input type="text" name="search" id="search" placeholder="Cari" />
+          <button id="logout-btn" onclick="kembalikanKeHalamanLogin()">
+            Logout
+          </button>
+        </div>
+      </div>
+      <div class="content-dashbord">
+        <!-- modal content-->
+        <h1>Selamat datang di Dashboard</h1>
+        <div class="modal" id="editModal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h1>Edit Form</h1>
+            <form id="editForm">
+              <label for="judul">Masukan Judul</label>
+              <input type="text" name="judul" id="judul" />
+              <label for="nama">Penulis</label>
+              <input type="text" name="nama" id="nama" />
+              <label for="date">Tanggal</label>
+              <input type="date" name="date" id="date" />
+              <label for="artikel">Tulis Artikel</label>
+              <textarea
+                id="artikel"
+                name="artikel"
+                cols="30"
+                rows="10"
+              ></textarea>
+              <input
+                type="submit"
+                value="Update Artikel"
+                onclick="saveEditedArtikel()"
+              />
+            </form>
+          </div>
+        </div>
+        <!-- table content -->
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Judul</th>
+                <th>artikel</th>
+                <th>Penulis</th>
+                <th>Tanggal Terbit</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+      function logOut() {
+        localStorage.removeItem("session");
+        window.location.href = "../auth/login.html"
+        alert("Logout sucses")
+      }
+
+      const modal = document.getElementById("editModal");
+      let editedIndex = -1;
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Cek user session
+        const userSession = getSessionFromLokalStorage();
+        console.log(userSession);
+
+        if (!userSession) {
+          window.location.href = "../auth/login.html";
+          alert("Sesi anda telah barakhir anda harus login lagi");
+        }
+
+        const articles = getArticlesFormLokalStorage();
+        const tbody = document.getElementById("tbody");
+
+        articles.forEach((article, index) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${article.judul}</td>
+                        <td>${article.artikel}</td>
+                        <td>${article.nama}</td>
+                        <td>${article.date}</td>
+                        <td>
+                        <button onclick="editArtikel(${index})">Edit</button>
+                        <button onclick="deleteArtikel(${index})">Delete</button>
+                        </td>`;
+          tbody.append(tr);
+        });
+      });
+
+      function getSessionFromLokalStorage() {
+        const sessionJSON = localStorage.getItem("session");
+        return sessionJSON ? json.parse(sessionJSON) : null;
+      }
+      // function untuk mengedit artikel
+      function editArtikel(index) {
+        modal.style.display = "block";
+
+        const artikels = getArticlesFormLokalStorage();
+        editedIndex = index;
+        const editedArtikel = artikels[editedIndex];
+
+        document.getElementById("judul").value = editedArtikel.judul;
+        document.getElementById("nama").value = editedArtikel.nama;
+        document.getElementById("date").value = editedArtikel.date;
+        document.getElementById("artikel").value = editedArtikel.artikel;
+      }
+      function saveEditedArtikel(index) {
+        const judulInput = document.getElementById("judul");
+        const namaInput = document.getElementById("nama");
+        const dateInput = document.getElementById("date");
+        const artikelInput = document.getElementById("artikel");
+
+        const editedJudul = judulInput.value.trim();
+        const editedName = namaInput.value.trim();
+        const editedDate = dateInput.value.trim();
+        const editedArtikel = artikelInput.value.trim();
+
+        if (
+          editedJudul !== "" ||
+          editedName !== "" ||
+          editedDate !== "" ||
+          editedArtikel !== ""
+        ) {
+          const artikels = getArticlesFormLokalStorage();
+
+          artikels[editedIndex] = {
+            judul: editedJudul,
+            nama: editedName,
+            date: editedDate,
+            artikel: editedArtikel,
+          };
+          saveArticlesToLocalStorage(artikels);
+          alert("Artikel berhasil diedit");
+        } else {
+          alert("Inputan tidak boleh kosong!");
+        }
+      }
+      // function untuk menghapus artikel
+      function deleteArtikel(index) {
+        const articles = getArticlesFormLokalStorage();
+        if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
+          articles.splice(index, 1);
+          alert("data berhasil dihapus");
+        } else {
+          alert("data tidak jadi dihapus");
+        }
+        saveArticlesToLocalStorage(articles);
+      }
+      //
+      function getArticlesFormLokalStorage() {
+        const artikelsJSON = localStorage.getItem("articles");
+        return artikelsJSON ? JSON.parse(artikelsJSON) : [];
+      }
+      function saveArticlesToLocalStorage(arg) {
+        localStorage.setItem("articles", JSON.stringify(arg));
+      }
+      //
+      function togleSideBar() {
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+
+        if (sidebar.style.width === "250px") {
+          sidebar.style.width = "0px";
+          sidebar.style.display = "none";
+          content.style.marginLeft = "0px";
+        } else {
+          sidebar.style.width = "250px";
+          sidebar.style.display = "block";
+          content.style.marginLeft = "250px";
+        }
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const sessionStudent = dapatkanSessionDariLokalStorage();
+        console.log(sessionStudent);
+
+        if (!sessionStudent) {
+          window.location.href = "/auth/login.html";
+        }
+      });
+      function dapatkanSessionDariLokalStorage() {
+        const sessionJSON = localStorage.getItem("session");
+        return sessionJSON ? JSON.parse(sessionJSON) : null;
+      }
+      function kembalikanKeHalamanLogin() {
+        localStorage.removeItem("session");
+        alert("Logout sucsesfully");
+        window.location.href = "/auth/login.html";
+      }
+    </script>
+  </body>
+</html>

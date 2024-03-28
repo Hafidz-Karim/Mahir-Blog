@@ -1,0 +1,119 @@
+* {
+  font-family: "Roboto", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --primary: #407bff;
+  --secondary: #2d6fff;
+  --navbar: #6246ea;
+}
+
+#sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  display: none;
+  padding-top: 30px;
+  background-color: var(--primary);
+}
+#sidebar h2 {
+  color: white;
+  text-align: center;
+  padding: 20px 0px;
+}
+#sidebar a {
+  display: flex;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+}
+#sidebar a:hover {
+  background-color: var(--secondary);
+}
+#content {
+  margin-left: 0px;
+  padding: 16px;
+  height: 100%;
+  overflow: hidden;
+}
+#navbar {
+  background-color: var(--primary);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+  overflow: hidden;
+}
+.togle-btn {
+  background-color: white;
+  border-radius: 4px;
+  padding: 3px 8px;
+  transform: scale(1.2);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+#navbar .right input {
+  padding: 8px 13px;
+  border-radius: 4px;
+  border: none;
+  display: none;
+}
+#navbar .right button {
+  padding: 8px 13px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  display: block;
+}
+#navbar .right button:hover {
+  background-color: #407bff;
+}
+.content-tambah-artikel {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.container label {
+  display: flex;
+  margin-top: 5px;
+}
+.container input {
+  padding: 7px 5px;
+  background-color: #fef6e4;
+  border-radius: 3px;
+  border: none;
+}
+.container textarea {
+  background-color: #fef6e4;
+  border-radius: 3px;
+  border: none;
+}
+.container input:nth-child(9) {
+  background-color: #6246ea;
+  padding: 10px 0px 10px 0px;
+  color: white;
+  cursor: pointer;
+}
+@media (min-width: 758px) {
+  #sidebar {
+    display: block;
+  }
+  #content {
+    margin-left: 250px;
+  }
+  .togle-btn {
+    padding: 1px 8px;
+  }
+  .content-tamabah-artikel {
+    margin-top: 20px;
+  }
+}
