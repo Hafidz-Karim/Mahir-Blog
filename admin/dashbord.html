@@ -77,8 +77,8 @@
     <script>
       function logOut() {
         localStorage.removeItem("session");
-        window.location.href = "../auth/login.html"
-        alert("Logout sucses")
+        window.location.href = "../auth/login.html";
+        alert("Logout sucses");
       }
 
       const modal = document.getElementById("editModal");
@@ -89,7 +89,7 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
-        // Cek user session
+        // Cek session User
         const userSession = getSessionFromLokalStorage();
         console.log(userSession);
 
@@ -97,7 +97,11 @@
           window.location.href = "../auth/login.html";
           alert("Sesi anda telah barakhir anda harus login lagi");
         }
-
+        function getSessionFromLokalStorage() {
+          const sessionJSON = localStorage.getItem("session");
+          return sessionJSON ? JSON.parse(sessionJSON) : null;
+        }
+        // Cek Articles
         const articles = getArticlesFormLokalStorage();
         const tbody = document.getElementById("tbody");
 
@@ -115,10 +119,6 @@
         });
       });
 
-      function getSessionFromLokalStorage() {
-        const sessionJSON = localStorage.getItem("session");
-        return sessionJSON ? json.parse(sessionJSON) : null;
-      }
       // function untuk mengedit artikel
       function editArtikel(index) {
         modal.style.display = "block";
