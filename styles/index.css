@@ -4,71 +4,91 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 :root {
-  --primary: #407bff;
-  --secondary: #2d6fff;
-  --navbar: #6246ea;
+  --primary-blue: #407bff;
 }
+
 .navbar {
-    background-color: var(--secondary);
-    color: #fefefe;
-    height: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  background-color: var(--primary-blue);
+  color: #fefefe;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 .container {
-    padding: 0px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: var(--primary); */
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
+
 .navigasi {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 10px;
 }
+
 .navigasi .login {
-    background-color: antiquewhite;
-    color: var(--primary);
-    padding: 8px 13px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: white;
+  color: var(--primary-blue);
+  padding: 8px 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-.navigasi .login:hover {
-    background-color: #fefefe;
-}
-.navigasi .register:hover {
-    background-color: #fefefe;
-    color: black;
-}
+
 .navigasi .register {
-    background-color: orange;
-    color: white;
-    padding: 8px 13px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #ffb325;
+  color: var(--primary-blue);
+  padding: 8px 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+.navigasi .dashboard {
+  background-color: rgb(84, 169, 234);
+  color: white;
+  padding: 8px 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* Content */
 .content {
-    margin-top: 20px;
+  margin-top: 20px;
 }
-.content-area {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
+div .card {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 .card {
-    width: 100%;
+  width: 80%;
+  background-color: #407bff;
+  display: flex;
+  border-radius: 4px;
+  flex-direction: column;
+  padding: 8px 13px;
+  color: white;
 }
+
+.content-area {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: 10px;
+  width: 100%;
+}
+
 @media (min-width: 768px) {
-    .container {
-        padding: 0px 90px;
-    }
-    .content-area {
-        grid-template-columns: repeat(3, 1fr);
-        width: 100%;
-    }
+  .container {
+    padding: 0px 90px;
+  }
+
+  .content-area {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
