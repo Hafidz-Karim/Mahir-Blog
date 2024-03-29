@@ -98,16 +98,16 @@ tr:hover td {
 td button:nth-child(1) {
   background-color: #6246ea;
   color: white;
-  border-radius: 2px;
-  padding: 5px 7px;
+  border-radius: 3px;
+  padding: 7px 10px;
   border: none;
 }
 td button:nth-child(2) {
   margin-top: 5px;
   background-color: red;
   color: white;
-  border-radius: 2px;
-  padding: 5px 7px;
+  border-radius: 3px;
+  padding: 7px 10px;
   border: none;
 }
 
